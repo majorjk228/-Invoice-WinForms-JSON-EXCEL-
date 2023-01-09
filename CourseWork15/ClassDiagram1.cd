@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CourseWork15.AddCompany" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAACABABAAAACAAAACAAAQAAgDEACAAAAAAAA=</HashCode>
+      <FileName>AddCompany.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.AddItem" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAECAAABAAAACAAEACQEAAAAADAAEAAAAAAQA=</HashCode>
+      <FileName>AddItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.ChooseCompany" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAABAYAACAAAACIAAIIAAABEAAAAAAAAA=</HashCode>
+      <FileName>ChooseCompany.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.ChooseItem" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAQAACAQAACIAAIAAAABEAAAAAAAAA=</HashCode>
+      <FileName>ChooseItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.CompanyLoop" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Company" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAACEAAAAAAQAAAoAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.CompDel" Collapsed="true">
+    <Position X="0.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAgABAQAACAAAACAAAIAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>CompDel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.DelItem" Collapsed="true">
+    <Position X="2.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAABAQAACAAAACAAAIAAAABEAAAAAAAAA=</HashCode>
+      <FileName>DelItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.EnglishForm" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/zgEAABJEDAgAJSACgCwgCWSRQq5xwo1JIGAoRATADA=</HashCode>
+      <FileName>EnglishForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Form1" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/1BIAhkAECBR0BCQTgCiAEUSYIi5xyhxFIzAgyEDEzA=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.From" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAIAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAAQ=</HashCode>
+      <FileName>From.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Graph" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACAAAAAAAACAAAICAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Graph.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Invoice" Collapsed="true">
+    <Position X="0.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAQAAAQAAAAQAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Invoice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.InvoiceExceptions" Collapsed="true">
+    <Position X="2.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InvoiceExceptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.JsonOperations&lt;T&gt;" Collapsed="true">
+    <Position X="4.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>JsonOperations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.MyExcel" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAESACAAAAAAAAAAAAAADEAAAAA=</HashCode>
+      <FileName>MyExcel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.NoNumber" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>NoNumber.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Print" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/zgEAABJECAgAJSACgCwgCWSQQq5xwo1JIGAIRATADA=</HashCode>
+      <FileName>Print.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Program" Collapsed="true">
+    <Position X="0.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.RootLoop" Collapsed="true">
+    <Position X="6" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Root.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Root" Collapsed="true">
+    <Position X="4.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAQAAAAAAIQAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Root.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Table" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAEJAAgAAAAAAAAAQADAAAAAAAAAAA=</HashCode>
+      <FileName>Table.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.TableLoop" Collapsed="true">
+    <Position X="0.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Table.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.To" Collapsed="true" HideInheritanceLine="true">
+    <Position X="2.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAIAAAAAAAAAAAAAAAAAAAAAqAAAAAAAAAAQ=</HashCode>
+      <FileName>To.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Total" Collapsed="true" HideInheritanceLine="true">
+    <Position X="6" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAIAACAAAAAAAAAAAAAAAAQAAAAAAAQAAgAA=</HashCode>
+      <FileName>Total.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Properties.Resources" Collapsed="true">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CourseWork15.Properties.Settings" Collapsed="true">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
