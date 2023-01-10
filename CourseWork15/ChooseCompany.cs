@@ -22,7 +22,7 @@ namespace CourseWork15
             {
                 //comboBox1.DataSource = JsonOperations<CompanyLoop>.Reads(file).Companies.OrderBy(Company => Company.Name).ToList(); // Выводим весь список компаний
                 var companies = JsonOperations<CompanyLoop>.Reads(file).Companies.OrderBy(Company => Company.Name).ToList(); // Выводим весь список компаний
-                companies.RemoveAll(x => x.Name == form1.tbcompany.Text); // Находим элемент, который был добавлен и удаляем его из списка
+                companies.RemoveAll(x => x.Name == form1.tbcompany.Text || x.Name == form1.tbcompany2.Text); // Находим элемент, который был добавлен и удаляем его из списка
                 comboBox1.DataSource = companies;
             }
             catch (Exception)

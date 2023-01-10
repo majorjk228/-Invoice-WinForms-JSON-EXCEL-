@@ -23,7 +23,7 @@ namespace CourseWork15
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            tbdate.Text = Date;
+            tbdate.Text = Date;            
         }
 
         // Запись данных в файл JSON
@@ -376,6 +376,7 @@ namespace CourseWork15
                 MessageBox.Show(exception.Message);
             }
         }
+
         private void сохранитьВExcelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -424,7 +425,7 @@ namespace CourseWork15
                 root.Total.total_price = Convert.ToInt32(lblallprice.Text);
                 root.Total.signature = tbsignature.Text;
                 root.Total.fio = tbfio3.Text;
-                root.Total.date = DateTime.Now.ToString("dd.MM.yyyy");
+                root.Total.date = tbdate.Text;
 
 
                 Excel.Application excel = new Excel.Application(); // Создаем обект экселя
@@ -432,6 +433,12 @@ namespace CourseWork15
                 var wb = excel.Workbooks.Add(); // Создаем рабочую область в экселе(книгу)  
                 //var sheet = wb.Worksheets.Add(); // Если необходимо добавить еще один лист
                 Excel.Worksheet worksheet = wb.ActiveSheet; // Выбираем активный лист экселя, и вставляем в него данные
+
+                // Оформление 
+                worksheet.Cells[2, 1].CurrentRegion.Borders.LineStyle = Excel.XlLineStyle.xlContinuous; //границы
+                worksheet.Rows[1].Font.Bold = true;
+                // worksheet.Range["A:N"].EntireColumn.AutoFit();
+                worksheet.Columns.ColumnWidth = 15; // Ширина всех колонок 
 
                 // Вставка данных (В начале идет номер строки, затем номер колонки)
                 worksheet.Cells[1, 12] = "price_of_export";
@@ -452,6 +459,11 @@ namespace CourseWork15
                 worksheet.Cells[1, 3] = "TO";
                 worksheet.Cells[1, 4] = "TABLE";
                 worksheet.Cells[1, 14] = "TOTAL";
+                //worksheet.Cells[2, 14] = "Кол-во товаров за месяц: ";
+
+                int full_count = 0;  // Подсчитываем общее количество товаров за месяц
+                int total_count = 0; // Подсчитываем второстепенные сохранения в Excel
+                int total_sum = 0;   // Храним общую сумму
 
                 //Первый столбец
                 worksheet.Cells[2, 1] = "company";
@@ -490,22 +502,35 @@ namespace CourseWork15
                 worksheet.Cells[6, 5] = root.Invoice.carier;
 
                 // Блок Товаров
-                worksheet.Cells[1, 7] = "DESCRIPTION";
-                worksheet.Cells[1, 8] = "CODE_TNVED";
-                worksheet.Cells[1, 9] = "COUNTRY";
-                worksheet.Cells[1, 10] = "COUNT";
-                worksheet.Cells[1, 11] = "PRICE_PER_ONE";
-                worksheet.Cells[1, 12] = "COMMON_PRICE";
+                worksheet.Cells[1, 6] = "DESCRIPTION";
+                worksheet.Cells[1, 7] = "CODE_TNVED";
+                worksheet.Cells[1, 8] = "COUNTRY";
+                worksheet.Cells[1, 9] = "COUNT";
+                worksheet.Cells[1, 10] = "PRICE_PER_ONE";
+                worksheet.Cells[1, 11] = "COMMON_PRICE";
 
                 for (int i = 0; i < root.Table.Count; i++)
                 {
-                    worksheet.Cells[i + 3, 7] = root.Table[i].description;
-                    worksheet.Cells[i + 3, 8] = root.Table[i].code_tnved;
-                    worksheet.Cells[i + 3, 9] = root.Table[i].country;
-                    worksheet.Cells[i + 3, 10] = root.Table[i].count;
-                    worksheet.Cells[i + 3, 11] = root.Table[i].price_per_one;
-                    worksheet.Cells[i + 3, 12] = root.Table[i].common_price;
+                    worksheet.Cells[i + 2, 6] = root.Table[i].description;
+                    worksheet.Cells[i + 2, 7] = root.Table[i].code_tnved;
+                    worksheet.Cells[i + 2, 8] = root.Table[i].country;
+                    worksheet.Cells[i + 2, 9] = root.Table[i].count;
+                    worksheet.Cells[i + 2, 10] = root.Table[i].price_per_one;
+                    worksheet.Cells[i + 2, 11] = root.Table[i].common_price;
+
+                    worksheet.Cells[2, 14].ColumnWidth = 24;
+                    //worksheet.Cells[2, 14] = "Кол-во товаров за " + Convert.ToDateTime(root.Total.date).Month + ": ";
+                    worksheet.Cells[2, 15].ColumnWidth = 5;
+                    full_count += root.Table[i].count;
+
+                    worksheet.Cells[3, 14].ColumnWidth = 24;
+                    //worksheet.Cells[3, 14] = "Сумма товаров за " + Convert.ToDateTime(root.Total.date).Month + ": ";
+                    worksheet.Cells[3, 15].ColumnWidth = 5;
+                    //worksheet.Cells[3, 15] = root.Total.total_price;
+                    total_sum = root.Total.total_price; // Храним общую сумму
+
                 }
+                //worksheet.Cells[2, 15] = full_count;
 
                 worksheet.Cells[1, 12] = "PRICE_OF_EXPORT";
                 worksheet.Cells[1, 13] = root.Total.price_of_export;
@@ -520,10 +545,132 @@ namespace CourseWork15
                 worksheet.Cells[6, 12] = "date";
                 worksheet.Cells[6, 13] = root.Total.date;
 
-                wb.SaveAs(@"test23.xlsx"); // Сохраняем файл (Хранится в документах на компе(не в папке с проектом))
-                excel.Visible = true; // Открываем эксель
+                string file = @"C:\Users\typakek\Documents\test.xlsx";
 
-                /*                // метод формирование общего объекта 
+                bool fileExist = File.Exists(@file);  // Проверка существует ли файл
+                if (fileExist)
+                {
+                    Excel.Application Excel = new Excel.Application();
+                    var xlWB = Excel.Workbooks.Open(@file);
+                    var xlSht = xlWB.Worksheets[1]; //первый лист по порядку
+                    int iLastRow = xlSht.Cells[xlSht.Rows.Count, "A"].End[Microsoft.Office.Interop.Excel.XlDirection.xlUp].Row + 1;  //последняя пустая строка в столбце A
+
+                    // Вставка данных (В начале идет номер строки, затем номер колонки)
+                    xlSht.Cells[iLastRow + 1, 12] = "price_of_export";
+                    xlSht.Cells[iLastRow + 1, 13] = root.Total.price_of_export;
+                    xlSht.Cells[iLastRow + 2, 12] = "inkoterms";
+                    xlSht.Cells[iLastRow + 2, 13] = root.Total.inkoterms;
+                    xlSht.Cells[iLastRow + 3, 12] = "total_price";
+                    xlSht.Cells[iLastRow + 3, 13] = root.Total.total_price;
+                    xlSht.Cells[iLastRow + 4, 12] = "signature";
+                    xlSht.Cells[iLastRow + 4, 13] = root.Total.signature;
+                    xlSht.Cells[iLastRow + 5, 12] = "fio";
+                    xlSht.Cells[iLastRow + 5, 13] = root.Total.fio;
+                    xlSht.Cells[iLastRow + 6, 12] = "date";
+                    xlSht.Cells[iLastRow + 6, 13] = root.Total.date;
+
+                    //записать данные в excel HEADER
+                    xlSht.Rows[iLastRow + 1].Font.Bold = true; // Жирный заголовок
+                    xlSht.Cells[iLastRow + 1, 2] = "FROM";
+                    xlSht.Cells[iLastRow + 1, 3] = "TO";
+                    xlSht.Cells[iLastRow + 1, 4] = "TABLE";
+
+                    //Первый столбец
+                    xlSht.Cells[iLastRow + 2, 1] = "company";
+                    xlSht.Cells[iLastRow + 3, 1] = "fio";
+                    xlSht.Cells[iLastRow + 4, 1] = "adress";
+                    xlSht.Cells[iLastRow + 5, 1] = "cityindex";
+                    xlSht.Cells[iLastRow + 6, 1] = "country";
+                    xlSht.Cells[iLastRow + 7, 1] = "phone";
+
+                    //Блок FROM            
+                    xlSht.Cells[iLastRow + 2, 2] = root.From.company;
+                    xlSht.Cells[iLastRow + 3, 2] = root.From.fio;
+                    xlSht.Cells[iLastRow + 4, 2] = root.From.adress;
+                    xlSht.Cells[iLastRow + 5, 2] = root.From.cityindex;
+                    xlSht.Cells[iLastRow + 6, 2] = root.From.country;
+                    xlSht.Cells[iLastRow + 7, 2] = root.From.phone;
+
+                    //Блок TO
+                    xlSht.Cells[iLastRow + 2, 3] = root.To.company;
+                    xlSht.Cells[iLastRow + 3, 3] = root.To.fio;
+                    xlSht.Cells[iLastRow + 4, 3] = root.To.adress;
+                    xlSht.Cells[iLastRow + 5, 3] = root.To.cityindex;
+                    xlSht.Cells[iLastRow + 6, 3] = root.To.country;
+                    xlSht.Cells[iLastRow + 7, 3] = root.To.phone;
+
+                    // Блок TABLE
+                    xlSht.Cells[iLastRow + 2, 4] = "number";
+                    xlSht.Cells[iLastRow + 2, 5] = root.Invoice.number;
+                    xlSht.Cells[iLastRow + 3, 4] = "weight_brutto";
+                    xlSht.Cells[iLastRow + 3, 5] = root.Invoice.weight_brutto;
+                    xlSht.Cells[iLastRow + 4, 4] = "weight_netto";
+                    xlSht.Cells[iLastRow + 4, 5] = root.Invoice.weight_netto;
+                    xlSht.Cells[iLastRow + 5, 4] = "places";
+                    xlSht.Cells[iLastRow + 5, 5] = root.Invoice.places;
+                    xlSht.Cells[iLastRow + 6, 4] = "carier";
+                    xlSht.Cells[iLastRow + 6, 5] = root.Invoice.carier;
+
+                    // Блок Товаров
+                    xlSht.Cells[iLastRow + 1, 6] = "DESCRIPTION";
+                    xlSht.Cells[iLastRow + 1, 7] = "CODE_TNVED";
+                    xlSht.Cells[iLastRow + 1, 8] = "COUNTRY";
+                    xlSht.Cells[iLastRow + 1, 9] = "COUNT";
+                    xlSht.Cells[iLastRow + 1, 10] = "PRICE_PER_ONE";
+                    xlSht.Cells[iLastRow + 1, 11] = "COMMON_PRICE";
+
+                    for (int i = 0; i < root.Table.Count; i++)
+                    {
+                        xlSht.Cells[iLastRow + i + 2, 6] = root.Table[i].description;
+                        xlSht.Cells[iLastRow + i + 2, 7] = root.Table[i].code_tnved;
+                        xlSht.Cells[iLastRow + i + 2, 8] = root.Table[i].country;
+                        xlSht.Cells[iLastRow + i + 2, 9] = root.Table[i].count;
+                        xlSht.Cells[iLastRow + i + 2, 10] = root.Table[i].price_per_one;
+                        xlSht.Cells[iLastRow + i + 2, 11] = root.Table[i].common_price;
+                        total_count += root.Table[i].count;
+                    }
+
+                    //xlSht.Cells[2, 15] = full_count + total_count;              // Подсчитываем общее кол-во товаров за месяц
+                    //xlSht.Cells[3, 15] = root.Total.total_price + total_sum;    // Подсчитываем общую сумму
+
+                    xlSht.Cells[iLastRow + 1, 12] = "PRICE_OF_EXPORT";
+                    xlSht.Cells[iLastRow + 1, 13] = root.Total.price_of_export;
+                    xlSht.Cells[iLastRow + 2, 12] = "inkoterms";
+                    xlSht.Cells[iLastRow + 2, 13] = root.Total.inkoterms;
+                    xlSht.Cells[iLastRow + 3, 12] = "total_price";
+                    xlSht.Cells[iLastRow + 3, 13] = root.Total.total_price;
+                    xlSht.Cells[iLastRow + 4, 12] = "signature";
+                    xlSht.Cells[iLastRow + 4, 13] = root.Total.signature;
+                    xlSht.Cells[iLastRow + 5, 12] = "fio";
+                    xlSht.Cells[iLastRow + 5, 13] = root.Total.fio;
+                    xlSht.Cells[iLastRow + 6, 12] = "date";
+                    xlSht.Cells[iLastRow + 6, 13] = root.Total.date;
+
+                    DateTime date1 = new DateTime(2015, 7, 20);
+
+                    if (Convert.ToDateTime(root.Total.date).Month < Convert.ToDateTime(date1).Month) // Смотрим текущий месяц, если текущий месяц больше то ведем подсчет.
+                    {
+                        DateTime prev_month = Convert.ToDateTime(root.Total.date).AddMonths(-1); // Предыдущий месяц (для итога)
+                        xlSht.Cells[iLastRow - 2, 14] = $"Кол-во товаров за {prev_month.ToString("MMM")}: ";
+                        xlSht.Cells[iLastRow - 2, 15] = full_count + total_count;              // Подсчитываем общее кол-во товаров за месяц                        
+
+                        xlSht.Cells[iLastRow - 1, 14] = $"Сумма товаров за {prev_month.ToString("MMM")}: ";
+                        xlSht.Cells[iLastRow - 1, 15] = root.Total.total_price + total_sum;    // Подсчитываем общую сумму
+                    }
+                    
+                    //xlWB.Close(false); //false - закрыть рабочую книгу не сохраняя изменения
+                    //xlWB.Close(true); //закрыть и сохранить книгу
+                    Excel.Visible = true;
+                    //Excel.Quit();
+                }
+                else
+                {
+                    wb.SaveAs(@file); // Сохраняем файл 
+                    excel.Visible = true; // Открываем эксель
+                    //excel.Quit();
+                }
+
+                /*              // метод формирование общего объекта 
                                 Root root = new Root();
                                 root.From = new From();
                                 root.From.company = tbcompany.Text;
@@ -830,6 +977,7 @@ namespace CourseWork15
             Graph graph = new Graph();
             graph.ShowDialog();
         }
+
         public void noChar(object sender, KeyPressEventArgs e)
         {
             NoNumber.NoChar(sender, e);

@@ -32,15 +32,23 @@ namespace CourseWork15
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var data = comboBox1.SelectedItem;
-            var items = JsonOperations<TableLoop>.Reads(file).Tables.OrderBy(Table => Table.description).ToList();
-            foreach (var item in items)
+            try
             {
-                if (data.ToString() == item.description)
+                var data = comboBox1.SelectedItem;
+                if (data == null) { throw new Exception(); } // Проверка на выбранный товар
+                var items = JsonOperations<TableLoop>.Reads(file).Tables.OrderBy(Table => Table.description).ToList();
+                foreach (var item in items)
                 {
-                    form1.WriteRow(form1.dataGridView1, item);
-                    this.Close();                                                                             
+                    if (data.ToString() == item.description)
+                    {
+                        form1.WriteRow(form1.dataGridView1, item);
+                        this.Close();
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Кажется вы не выбрали товар", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

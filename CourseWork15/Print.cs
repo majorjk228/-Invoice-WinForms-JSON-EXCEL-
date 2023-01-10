@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,14 +18,11 @@ namespace CourseWork15
     public partial class Print : Form
     {
         public string Date, SName, Fio, Adress, Cityindex, Country, Phone, ToCompany,
-                       ToFio, ToAdress, ToCityindex, ToCountry, ToPhone,
-                       InvoiceNumber, InvoiceCarier,
-                       TInkoterms, TSignature, InvoiceWeight_brutto, InvoiceWeight_netto, InvoicePlaces,
-                       TPrice_of_export, TTotal_price, TFio,
-                       Description, Code_tnved, DСountry, DСount, DCrice_per_one, DPommon_price;
-
-       
-
+                      ToFio, ToAdress, ToCityindex, ToCountry, ToPhone,
+                      InvoiceNumber, InvoiceCarier,
+                      TInkoterms, TSignature, InvoiceWeight_brutto, InvoiceWeight_netto, InvoicePlaces,
+                      TPrice_of_export, TTotal_price, TFio,
+                      Description, Code_tnved, DСountry, DСount, DCrice_per_one, DPommon_price;
         public int RowsCount, Count;
 
         public Print()
@@ -36,7 +35,7 @@ namespace CourseWork15
         {
             PrinterSettings ps = new PrinterSettings();
             panelPrint = pnl;
-            getprtinarea(pnl);
+            getprtinarea(pnl); // Этот метод копирует нашу форму
             printDialog1.Document = printDocument1;
             printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
             printPreviewDialog1.ShowDialog();
@@ -85,11 +84,6 @@ namespace CourseWork15
         {
             Rectangle pagearea = e.PageBounds;
             e.Graphics.DrawImage(memoryimg, (pagearea.Width / 2) - (this.panelPrint.Width / 2), (pagearea.Height / 2) - (this.panelPrint.Height / 2));
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            Printdoc(this.panelPrint);
         }
     }
 }
