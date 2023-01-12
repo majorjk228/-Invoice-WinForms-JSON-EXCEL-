@@ -561,7 +561,7 @@ namespace CourseWork15
 
                     //xlWB.Close(false); //false - закрыть рабочую книгу не сохраняя изменения
                     //xlWB.Close(true); //закрыть и сохранить книгу
-                    xlWB.Save();
+                    //xlWB.Save();
                     Excel.Visible = true;
                     //Excel.Quit();
                 }
