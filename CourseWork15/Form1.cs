@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Office.Core;
+using Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -441,7 +443,8 @@ namespace CourseWork15
                 {
                     
                     Excel.Application Excel = new Excel.Application();
-                    var xlWB = Excel.Workbooks.Open(@file);
+                    //var xlWB = Excel.Workbooks.Open(@file, 0, false);
+                    var xlWB = Excel.Workbooks.Open(@file, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false); // Передаем параметры, для открытия excel в режиме редактирования
                     var xlSht = xlWB.Worksheets[1]; //первый лист по порядку
                     int iLastRow = xlSht.Cells[xlSht.Rows.Count, "A"].End[Microsoft.Office.Interop.Excel.XlDirection.xlUp].Row + 1;  //последняя пустая строка в столбце A
 
@@ -537,7 +540,7 @@ namespace CourseWork15
                     xlSht.Cells[iLastRow - 1, 18] = root.Total.total_price;
 
                     DateTime month = Convert.ToDateTime(xlSht.Cells[iLastRow - 2, 13].Text);         // Забираем месяц прошлого товара                    
-                    
+                    Excel.Visible = true;
                     // Если текущий месяц больше, чем у предыдущего товара, считаем итог
                     if (Convert.ToDateTime(month).Month < Convert.ToDateTime(root.Total.date).Month) // Смотрим текущий месяц, если текущий месяц больше то ведем подсчет.
                     {                        
@@ -554,16 +557,16 @@ namespace CourseWork15
                         sum = root.Total.total_price;   // Прибавляем к общемц счетчику новый добавленный товар
                     }
                     else
-                    {                        
+                    {
+                        xlSht.Cells[3, 18].ColumnWidth = 10;                          // Раскрываем системный столбец для того чтобы считать значение, в котором ведем подсчет количеств 
                         count += Convert.ToInt32(xlSht.Cells[iLastRow - 2, 18].Text); // Копим(считаем) общее кол-во товаров
-                        sum += Convert.ToInt32(xlSht.Cells[iLastRow - 1, 18].Text);   // Копим(считаем) общую сумму товаров                        
+                        sum += Convert.ToInt32(xlSht.Cells[iLastRow - 1, 18].Text);   // Копим(считаем) общую сумму товаров
+                        xlSht.Cells[3, 18].ColumnWidth = 0;                           // Скрываем системный столбец, в котором ведем подсчет количеств                         
                     }
 
-                    //xlWB.Close(false); //false - закрыть рабочую книгу не сохраняя изменения
-                    //xlWB.Close(true); //закрыть и сохранить книгу
-                    //xlWB.Save();
-                    Excel.Visible = true;
-                    //Excel.Quit();
+                    xlWB.Save();            // Сохраняем файл
+                    Excel.Visible = true;   // Открываем эксель
+                    //Excel.Quit();         // Закрываем эксель
                 }
                 else
                 {
@@ -676,9 +679,9 @@ namespace CourseWork15
                     worksheet.Cells[6, 12] = "date";
                     worksheet.Cells[6, 13] = root.Total.date;
 
-                    wb.SaveAs(@file); // Сохраняем файл 
-                    excel.Visible = true; // Открываем эксель
-                    //excel.Quit();
+                    wb.SaveAs(@file);       // Сохраняем файл                     
+                    excel.Visible = true;   // Открываем эксель
+                    //excel.Quit();         // Закрываем эксель
                 }
 
                 /*              // метод формирование общего объекта 
