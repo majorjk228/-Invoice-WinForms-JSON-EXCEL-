@@ -15,4 +15,15 @@ namespace CourseWork15
         public string fio { get; set; }
         public string date { get; set; }
     }
+
+    public class ResultLoop
+    {
+        public List<Result> Results = new List<Result>();     
+    }
+
+    public class Result
+    {
+        public string Month { get; set; }
+        public int Count { get; set; }
+    }
 }

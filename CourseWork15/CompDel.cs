@@ -9,9 +9,11 @@ namespace CourseWork15
 {
     public partial class CompDel : Form
     {
-        public CompDel()
+        Form1 form1; // Объвляем объект первой формы
+        public CompDel(Form1 owner)
         {
             InitializeComponent();
+            form1 = owner;             // устанавливаем владельца
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -28,6 +30,7 @@ namespace CourseWork15
                         companies.Companies.RemoveAll(x => x.Name == data.ToString()); // Удаляем элемент который соответсвует выбранному айтому из комбобокса
                         string json = JsonConvert.SerializeObject(companies, Formatting.Indented);
                         File.WriteAllText("companies.json", json); // Перезаписываем
+                        form1.ClearCompanies();
                         MessageBox.Show("Компания " + data.ToString() + " успешно удалена!");
                         this.Close(); // Закрываем текущую форму
                     }
@@ -39,12 +42,10 @@ namespace CourseWork15
                 throw;
             }
         }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
         private void comboBox1_Click(object sender, EventArgs e)
         {
             try
@@ -58,6 +59,11 @@ namespace CourseWork15
                 MessageBox.Show("Компании отсутствуют.");
                 this.Close();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            form1.ClearCompanies();
         }
     }
 }

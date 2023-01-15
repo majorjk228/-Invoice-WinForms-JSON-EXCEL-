@@ -117,6 +117,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.EngPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pBRus)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -944,9 +945,10 @@
             this.places.Location = new System.Drawing.Point(80, 30);
             this.places.Margin = new System.Windows.Forms.Padding(2);
             this.places.Name = "places";
+            this.places.ReadOnly = true;
             this.places.Size = new System.Drawing.Size(187, 20);
             this.places.TabIndex = 15;
-            this.places.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.noChar);
+            this.places.Leave += new System.EventHandler(this.check_places);
             // 
             // nakladnaya
             // 
@@ -997,12 +999,23 @@
             this.label22.TabIndex = 10;
             this.label22.Text = "Кол-во мест:";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(492, 86);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 121;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(595, 753);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.EngPic);
             this.Controls.Add(this.pBRus);
             this.Controls.Add(this.menuStrip1);
@@ -1031,6 +1044,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Инвойс (Invoice)";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.EngPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pBRus)).EndInit();
@@ -1146,6 +1160,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button button1;
     }
 }
 

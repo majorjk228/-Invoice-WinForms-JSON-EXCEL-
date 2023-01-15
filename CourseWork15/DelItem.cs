@@ -14,9 +14,11 @@ namespace CourseWork15
 {
     public partial class DelItem : Form
     {
-        public DelItem()
+        Form1 form1; // Объвляем объект первой формы
+        public DelItem(Form1 owner)
         {
             InitializeComponent();
+            form1 = owner;             // устанавливаем владельца
         }
 
         public string file = "goods.json"; 
@@ -48,6 +50,7 @@ namespace CourseWork15
                         goods.Tables.RemoveAll(x => x.description == data.ToString()); // Удаляем элемент который соответсвует выбранному айтому из комбобокса
                         string json = JsonConvert.SerializeObject(goods, Formatting.Indented);
                         File.WriteAllText(file, json);                                 // Перезаписываем
+                        form1.DeleteRows(form1.dataGridView1, data);
                         MessageBox.Show("Товар " + data.ToString() + " успешно удален!");
                         this.Close();                                                  // Закрываем текущую форму
                     }
@@ -57,6 +60,19 @@ namespace CourseWork15
             {
                 throw;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var data = comboBox1.SelectedItem;                
+                form1.DeleteRows(form1.dataGridView1, data);
+            }
+            catch (Exception)
+            {
+                throw;
+            }            
         }
     }
 }

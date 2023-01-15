@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Core;
-using Microsoft.Office.Interop.Excel;
+﻿using Microsoft.Office.Interop.Excel;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -25,7 +24,7 @@ namespace CourseWork15
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            tbdate.Text = Date;            
+            tbdate.Text = Date;
         }
 
         // Запись данных в файл JSON
@@ -43,6 +42,23 @@ namespace CourseWork15
                 return JsonConvert.DeserializeObject<RootLoop>(File.ReadAllText("invoice.json"));
             }
             return new RootLoop { Roots = new List<Root>() };
+        }
+
+        // Чистим содержимое компаний
+        public void ClearCompanies()
+        {
+            tbcompany.Text = "";
+            tbfio.Text = "";
+            tbadress.Text = "";
+            tbcity.Text = "";
+            tbcountryfrom.Text = "";
+            tbtelfax.Text = "";
+            tbcompany2.Text = "";
+            tbfio2.Text = "";
+            tbadress2.Text = "";
+            tbcity2.Text = "";
+            tbcounry2.Text = "";
+            tbfax2.Text = "";
         }
 
         // Собираем данные с датагрид
@@ -81,6 +97,18 @@ namespace CourseWork15
             }
         }
 
+        // Удаляем выбраный товар из combobox       
+        public void DeleteRows(DataGridView View, object item)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            {
+                if (Convert.ToString(item) == View.Rows[i].Cells[0].Value.ToString())
+                {
+                    View.Rows.RemoveAt(View.Rows[i].Index);
+                }
+            }
+        }
+
         // Метод позволяет "переводить" датагрид на английский язык, при смене языка в программе
         public void WriteEngRows(DataGridView View, List<Table> rows) // Пишем весь датагрид сразу с переводом на английский
         {
@@ -95,7 +123,9 @@ namespace CourseWork15
         {
             View.Rows.Add(rows.description, rows.code_tnved, rows.country, rows.count, rows.price_per_one, rows.common_price);
             int totalSum = Convert.ToInt32(lblallprice.Text) + rows.common_price;
-            lblallprice.Text = Convert.ToString(totalSum); //Convert.ToInt32(rows.common_price);   // Считаем общую стоимость
+            lblallprice.Text = Convert.ToString(totalSum);  // Считаем общую стоимость
+            places.Text = lblallprice.Text;
+            places.ReadOnly = false;
         }
         //перевод
         public string TranslateText(string input, int i)
@@ -433,7 +463,7 @@ namespace CourseWork15
                 root.Total.signature = tbsignature.Text;
                 root.Total.fio = tbfio3.Text;
                 root.Total.date = tbdate.Text;
-                                    
+
                 int total_count2 = 0; // Храним количество последующих добавлений
 
                 string file = @"C:\Users\typakek\Documents\test.xlsx";
@@ -441,7 +471,7 @@ namespace CourseWork15
                 bool fileExist = File.Exists(@file);  // Проверка существует ли файл
                 if (fileExist)
                 {
-                    
+
                     Excel.Application Excel = new Excel.Application();
                     //var xlWB = Excel.Workbooks.Open(@file, 0, false);
                     var xlWB = Excel.Workbooks.Open(@file, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false); // Передаем параметры, для открытия excel в режиме редактирования
@@ -535,7 +565,7 @@ namespace CourseWork15
                     xlSht.Cells[iLastRow + 5, 13] = root.Total.fio;
                     xlSht.Cells[iLastRow + 6, 12] = "date";
                     xlSht.Cells[iLastRow + 6, 13] = root.Total.date;
-                   
+
                     xlSht.Cells[iLastRow - 2, 18] = total_count2;
                     xlSht.Cells[iLastRow - 1, 18] = root.Total.total_price;
 
@@ -543,12 +573,21 @@ namespace CourseWork15
                     Excel.Visible = true;
                     // Если текущий месяц больше, чем у предыдущего товара, считаем итог
                     if (Convert.ToDateTime(month).Month < Convert.ToDateTime(root.Total.date).Month) // Смотрим текущий месяц, если текущий месяц больше то ведем подсчет.
-                    {                        
+                    {
                         DateTime prev_month = Convert.ToDateTime(root.Total.date).AddMonths(-1); // Предыдущий месяц (для итога)
                         xlSht.Cells[iLastRow - 2, 14] = $"Кол-во товаров за {prev_month.ToString("MMM")}: ";
-                        xlSht.Cells[iLastRow - 2, 15] = count + full_count; // Подсчитываем общее кол-во товаров за месяц                        
+                        xlSht.Cells[iLastRow - 2, 15] = count + full_count; // Подсчитываем общее кол-во товаров за месяц
 
-                        xlSht.Cells[iLastRow - 1, 14] = $"Сумма товаров за {prev_month.ToString("MMM")}: ";                        
+                        // Блок для итогов в графике
+                        xlSht.Cells[3, 19].ColumnWidth = 40;
+                        xlSht.Cells[3, 20].ColumnWidth = 40;
+                        xlSht.Cells[iLastRow - 2, 19] = prev_month.ToString("MMMM"); // Выводим в колонку название месяца
+                        xlSht.Cells[iLastRow - 2, 20] = count + full_count; ;// Подсчитываем общее кол-во товаров за месяц   
+                        xlSht.Cells[3, 19].ColumnWidth = 0;
+                        xlSht.Cells[3, 20].ColumnWidth = 0;
+
+
+                        xlSht.Cells[iLastRow - 1, 14] = $"Сумма товаров за {prev_month.ToString("MMM")}: ";
                         xlSht.Cells[iLastRow - 1, 15] = sum + total_sum;    // Подсчитываем общую сумму
 
                         full_count = 0;                 // Обнуляем, переменная нужна для корректного подсчета самого первого месяца
@@ -604,7 +643,7 @@ namespace CourseWork15
                     worksheet.Cells[1, 2] = "FROM";
                     worksheet.Cells[1, 3] = "TO";
                     worksheet.Cells[1, 4] = "TABLE";
-                    worksheet.Cells[1, 14] = "TOTAL";            
+                    worksheet.Cells[1, 14] = "TOTAL";
 
                     //Первый столбец
                     worksheet.Cells[2, 1] = "company";
@@ -964,7 +1003,7 @@ namespace CourseWork15
 
         private void удалитьКомпаниюToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CompDel compDel = new CompDel();
+            CompDel compDel = new CompDel(this);
             compDel.ShowDialog();
         }
 
@@ -976,7 +1015,7 @@ namespace CourseWork15
 
         private void удалитьТоварToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DelItem delItem = new DelItem();
+            DelItem delItem = new DelItem(this);
             delItem.ShowDialog();
         }
 
@@ -1000,6 +1039,22 @@ namespace CourseWork15
         public void noNum(object sender, KeyPressEventArgs e)
         {
             NoNumber.NoNum(sender, e);
+        }
+
+        private void check_places(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Convert.ToInt32(places.Text) <= Convert.ToInt32(lblallprice.Text))
+                {
+                    places.Text = lblallprice.Text;
+                    throw new InvoiceExceptions("Кол-во мест е должно быть не меньше общего количества товаров");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1181,6 +1236,17 @@ namespace CourseWork15
         private void выходToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string file = @"C:\Users\typakek\Documents\test.xlsx";
+            MyExcel excel = new MyExcel(file);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {            
+            MyExcel.CleanUp();
         }
     }
 }
