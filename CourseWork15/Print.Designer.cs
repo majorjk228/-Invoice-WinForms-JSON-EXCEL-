@@ -100,6 +100,7 @@
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelPrint.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -114,6 +115,7 @@
             // panelPrint
             // 
             this.panelPrint.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.panelPrint.Controls.Add(this.button1);
             this.panelPrint.Controls.Add(this.tbdate);
             this.panelPrint.Controls.Add(this.label24);
             this.panelPrint.Controls.Add(this.label3);
@@ -813,6 +815,16 @@
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(491, 34);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 118;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Print
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -917,5 +929,6 @@
         private System.Windows.Forms.PrintDialog printDialog1;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Aspose.Words;
+using Aspose.Words.Saving;
+using iTextSharp.text.pdf;
 using Microsoft.Office.Core;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,47 @@ namespace CourseWork15
                       TInkoterms, TSignature, InvoiceWeight_brutto, InvoiceWeight_netto, InvoicePlaces,
                       TPrice_of_export, TTotal_price, TFio,
                       Description, Code_tnved, DСountry, DСount, DCrice_per_one, DPommon_price;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Save();
+/*            var document = new iTextSharp.text.Document();
+
+            using (var writer = PdfWriter.GetInstance(document, new FileStream("result.pdf", FileMode.Create)))
+            {
+                document.Open();
+
+                // do some work here
+                var logo = iTextSharp.text.Image.GetInstance(new FileStream(@"C:\Users\typakek\Desktop\CourseWork15\CourseWork15\bin\Debug\Invoce.Jpeg", FileMode.Open));
+                logo.SetAbsolutePosition(0, 0);
+                writer.DirectContent.AddImage(logo);
+                document.Close();
+                writer.Close();
+            }*/
+        }
+
+
+        private string Save()
+        {
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "pdf files (*.pdf)|*.pdf";//|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+                    // Code to write the stream goes here.
+                    return saveFileDialog1.FileName;
+                   // return myStream.;
+                  //  myStream.Close();
+
+                }
+            }
+            return "";
+        }
 
         public int RowsCount, Count;
 
@@ -59,6 +102,7 @@ namespace CourseWork15
         {
             var doc = new Document();
             var builder = new DocumentBuilder(doc);
+            
 
             memoryimg = new Bitmap(pnl.Width, pnl.Height);
             pnl.DrawToBitmap(memoryimg, new System.Drawing.Rectangle(0, 0, pnl.Width, pnl.Height));
@@ -67,7 +111,7 @@ namespace CourseWork15
                 pnl.DrawToBitmap(memoryimg, new System.Drawing.Rectangle(0, 0, pnl.Width, pnl.Height));
                 memoryimg.Save(bitmapWriter.BaseStream, ImageFormat.Jpeg);
                 builder.InsertImage(memoryimg);
-                doc.Save("Output.pdf"); // Преобразование из jpeg v pdf
+                doc.Save(Save() + "Output.pdf"); // Преобразование из jpeg v pdf    + диалоговое сохранение                            
             }            
         }
 
