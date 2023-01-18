@@ -51,7 +51,7 @@ namespace CourseWork15
 
         private string Save()
         {
-            Stream myStream;
+            //Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "pdf files (*.pdf)|*.pdf";//|All files (*.*)|*.*";
             saveFileDialog1.FilterIndex = 2;
@@ -59,14 +59,7 @@ namespace CourseWork15
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if ((myStream = saveFileDialog1.OpenFile()) != null)
-                {
-                    // Code to write the stream goes here.
                     return saveFileDialog1.FileName;
-                   // return myStream.;
-                  //  myStream.Close();
-
-                }
             }
             return "";
         }
@@ -111,7 +104,7 @@ namespace CourseWork15
                 pnl.DrawToBitmap(memoryimg, new System.Drawing.Rectangle(0, 0, pnl.Width, pnl.Height));
                 memoryimg.Save(bitmapWriter.BaseStream, ImageFormat.Jpeg);
                 builder.InsertImage(memoryimg);
-                doc.Save(Save() + "Output.pdf"); // Преобразование из jpeg v pdf    + диалоговое сохранение                            
+                doc.Save(Save() /*+ "Output.pdf"*/); // Преобразование из jpeg v pdf    + диалоговое сохранение                            
             }            
         }
 
