@@ -1240,8 +1240,8 @@ namespace CourseWork15
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string file = @"C:\Users\typakek\Documents\test.xlsx";
-            MyExcel excel = new MyExcel(file);
+            Print print = new Print(); // Форма
+            print.ShowDialog();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
